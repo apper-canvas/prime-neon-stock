@@ -1,0 +1,122 @@
+[
+  {
+    "Id": 1,
+    "name": "MacBook Pro 14-inch",
+    "sku": "MBP-14-256",
+    "category": "Electronics",
+    "quantity": 15,
+    "price": 1999.99,
+    "imageUrl": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=400&fit=crop",
+    "lowStockThreshold": 10,
+    "createdAt": "2024-01-15T10:30:00Z",
+    "updatedAt": "2024-01-20T14:22:00Z"
+  },
+  {
+    "Id": 2,
+    "name": "Nike Air Force 1",
+    "sku": "NAF-WHT-42",
+    "category": "Footwear",
+    "quantity": 8,
+    "price": 89.99,
+    "imageUrl": "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop",
+    "lowStockThreshold": 15,
+    "createdAt": "2024-01-12T09:15:00Z",
+    "updatedAt": "2024-01-19T11:45:00Z"
+  },
+  {
+    "Id": 3,
+    "name": "iPhone 15 Pro",
+    "sku": "IP15-PRO-128",
+    "category": "Electronics",
+    "quantity": 0,
+    "price": 999.99,
+    "imageUrl": "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400&h=400&fit=crop",
+    "lowStockThreshold": 5,
+    "createdAt": "2024-01-10T16:20:00Z",
+    "updatedAt": "2024-01-18T13:30:00Z"
+  },
+  {
+    "Id": 4,
+    "name": "Organic Coffee Beans",
+    "sku": "OCB-DARK-500",
+    "category": "Food & Beverage",
+    "quantity": 45,
+    "price": 24.99,
+    "imageUrl": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400&h=400&fit=crop",
+    "lowStockThreshold": 20,
+    "createdAt": "2024-01-08T08:00:00Z",
+    "updatedAt": "2024-01-17T10:15:00Z"
+  },
+  {
+    "Id": 5,
+    "name": "Wireless Gaming Headset",
+    "sku": "WGH-BLK-7.1",
+    "category": "Electronics",
+    "quantity": 12,
+    "price": 149.99,
+    "imageUrl": "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=400&fit=crop",
+    "lowStockThreshold": 10,
+    "createdAt": "2024-01-14T12:45:00Z",
+    "updatedAt": "2024-01-21T09:30:00Z"
+  },
+  {
+    "Id": 6,
+    "name": "Premium Yoga Mat",
+    "sku": "PYM-PRP-6MM",
+    "category": "Fitness",
+    "quantity": 3,
+    "price": 79.99,
+    "imageUrl": "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400&h=400&fit=crop",
+    "lowStockThreshold": 5,
+    "createdAt": "2024-01-11T14:30:00Z",
+    "updatedAt": "2024-01-19T16:20:00Z"
+  },
+  {
+    "Id": 7,
+    "name": "Smart Watch Series 9",
+    "sku": "SW9-SLV-45MM",
+    "category": "Electronics",
+    "quantity": 22,
+    "price": 399.99,
+    "imageUrl": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&h=400&fit=crop",
+    "lowStockThreshold": 8,
+    "createdAt": "2024-01-13T11:10:00Z",
+    "updatedAt": "2024-01-20T15:45:00Z"
+  },
+  {
+    "Id": 8,
+    "name": "Ceramic Dinner Plate Set",
+    "sku": "CDS-WHT-12PC",
+    "category": "Home & Kitchen",
+    "quantity": 18,
+    "price": 89.99,
+    "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop",
+    "lowStockThreshold": 12,
+    "createdAt": "2024-01-09T13:25:00Z",
+    "updatedAt": "2024-01-18T12:10:00Z"
+  },
+  {
+    "Id": 9,
+    "name": "Bluetooth Speaker",
+    "sku": "BTS-360-BLU",
+    "category": "Electronics",
+    "quantity": 7,
+    "price": 59.99,
+    "imageUrl": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=400&fit=crop",
+    "lowStockThreshold": 10,
+    "createdAt": "2024-01-16T10:40:00Z",
+    "updatedAt": "2024-01-21T14:55:00Z"
+  },
+  {
+    "Id": 10,
+    "name": "Leather Office Chair",
+    "sku": "LOC-BRN-ERG",
+    "category": "Furniture",
+    "quantity": 5,
+    "price": 299.99,
+    "imageUrl": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop",
+    "lowStockThreshold": 8,
+    "createdAt": "2024-01-07T15:50:00Z",
+    "updatedAt": "2024-01-20T11:35:00Z"
+  }
+]
