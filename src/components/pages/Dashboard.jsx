@@ -1,17 +1,18 @@
-import { useState, useEffect, useMemo } from "react"
-import { toast } from "react-toastify"
-import { motion } from "framer-motion"
-import { productService } from "@/services/api/productService"
-import Loading from "@/components/ui/Loading"
-import ErrorView from "@/components/ui/ErrorView"
-import Empty from "@/components/ui/Empty"
-import StatsGrid from "@/components/organisms/StatsGrid"
-import ProductTable from "@/components/organisms/ProductTable"
-import ProductModal from "@/components/organisms/ProductModal"
-import DeleteConfirmationModal from "@/components/organisms/DeleteConfirmationModal"
-import SearchBar from "@/components/molecules/SearchBar"
-import FloatingActionButton from "@/components/molecules/FloatingActionButton"
-import Select from "@/components/atoms/Select"
+import React, { useEffect, useMemo, useState } from "react";
+import { toast } from "react-toastify";
+import { motion } from "framer-motion";
+import { productService } from "@/services/api/productService";
+import ApperIcon from "@/components/ApperIcon";
+import Loading from "@/components/ui/Loading";
+import ErrorView from "@/components/ui/ErrorView";
+import Empty from "@/components/ui/Empty";
+import Select from "@/components/atoms/Select";
+import DeleteConfirmationModal from "@/components/organisms/DeleteConfirmationModal";
+import ProductTable from "@/components/organisms/ProductTable";
+import StatsGrid from "@/components/organisms/StatsGrid";
+import ProductModal from "@/components/organisms/ProductModal";
+import SearchBar from "@/components/molecules/SearchBar";
+import FloatingActionButton from "@/components/molecules/FloatingActionButton";
 
 const Dashboard = () => {
   const [products, setProducts] = useState([])
@@ -285,7 +286,7 @@ const Dashboard = () => {
               ))}
             </Select>
           </div>
-        </motion.div>
+</motion.div>
 
         {/* Products Table */}
         {filteredProducts.length === 0 && (searchTerm || selectedCategory) ? (
@@ -295,25 +296,20 @@ const Dashboard = () => {
             transition={{ delay: 0.5 }}
             className="glass rounded-xl p-12 text-center"
           >
+            <ApperIcon name="Search" className="w-12 h-12 text-white/30 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-white mb-2">No products found</h3>
             <p className="text-white/70 mb-6">
-              Try adjusting your search or filter criteria
+              Try adjusting your search or filter criteria to see more results
             </p>
-            <div className="flex justify-center space-x-4">
-              <button
-                onClick={() => setSearchTerm("")}
-                className="text-accent hover:text-accent/80 transition-colors"
-              >
-                Clear search
-              </button>
-              <span className="text-white/30">•</span>
-              <button
-                onClick={() => setSelectedCategory("")}
-                className="text-accent hover:text-accent/80 transition-colors"
-              >
-                Clear filter
-              </button>
-            </div>
+            <button
+              onClick={() => {
+                setSearchTerm("")
+                setSelectedCategory("")
+              }}
+              className="px-6 py-2 bg-accent/20 text-accent border border-accent/30 rounded-lg hover:bg-accent/30 transition-all duration-200"
+            >
+              Clear all filters
+            </button>
           </motion.div>
         ) : (
           <ProductTable

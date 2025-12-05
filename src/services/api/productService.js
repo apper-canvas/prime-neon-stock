@@ -1,12 +1,11 @@
-import mockProducts from "@/services/mockData/products.json"
+import mockProducts from "@/services/mockData/products.json";
 
-const STORAGE_KEY = "neonstock-products"
+const STORAGE_KEY = "neonstock-products";
 
 class ProductService {
   constructor() {
-    this.initializeData()
+    this.initializeData();
   }
-
   initializeData() {
     const savedData = localStorage.getItem(STORAGE_KEY)
     if (!savedData) {
@@ -134,12 +133,28 @@ class ProductService {
         })
       }, 200)
     })
-  }
+}
 
   getProductStatus(product) {
-    if (product.quantity === 0) return "out-of-stock"
-    if (product.quantity <= product.lowStockThreshold) return "low-stock"
-    return "in-stock"
+    if (product.quantity === 0) return "out-of-stock";
+    if (product.quantity <= product.lowStockThreshold) return "low-stock";
+    return "in-stock";
+  }
+
+  // Get all unique categories from products
+  getAllCategories() {
+    const products = this.getAll();
+    return [...new Set(products.map(product => product.category))].sort();
+  }
+// Get products filtered by stock status
+  getProductsByStatus(status) {
+    const products = this.getAll();
+    if (!status || status === 'all') return products;
+    
+    return products.filter(product => {
+      const productStatus = this.getProductStatus(product);
+      return productStatus === status;
+    });
   }
 }
 
