@@ -36,7 +36,7 @@ class ProductService {
     })
   }
 
-  createProduct(productData) {
+createProduct(productData) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         try {
@@ -45,6 +45,7 @@ class ProductService {
           const newProduct = {
             ...productData,
             Id: maxId + 1,
+            location: productData.location || "",
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString()
           }

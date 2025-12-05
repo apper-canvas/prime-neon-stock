@@ -52,22 +52,23 @@ const Modal = forwardRef(({
           ref={ref}
         >
           {/* Backdrop */}
-          <motion.div
+<motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/70 backdrop-blur-md"
+            className="fixed inset-0 bg-black/80 backdrop-blur-lg"
             onClick={onClose}
           />
           
-          {/* Modal */}
+{/* Modal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ duration: 0.2 }}
+            initial={{ opacity: 0, y: "100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "100%" }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             className={cn(
-              "relative w-full mx-auto glass rounded-2xl shadow-2xl overflow-hidden",
+              "relative w-full mx-auto glass rounded-t-2xl shadow-2xl overflow-hidden",
+              "border-t border-white/20",
               sizes[size],
               className
             )}

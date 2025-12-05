@@ -7,7 +7,7 @@ import Select from "@/components/atoms/Select"
 import Button from "@/components/atoms/Button"
 import ApperIcon from "@/components/ApperIcon"
 
-const ProductModal = ({ 
+const ProductModal = ({
   className,
   isOpen,
   onClose,
@@ -17,12 +17,13 @@ const ProductModal = ({
   isLoading = false,
   ...props 
 }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     name: "",
     sku: "",
     category: "",
     quantity: 0,
     price: 0,
+    location: "",
     imageUrl: "",
     lowStockThreshold: 10
   })
@@ -31,13 +32,14 @@ const ProductModal = ({
   const isEditing = !!product
 
   useEffect(() => {
-    if (product) {
+if (product) {
       setFormData({
         name: product.name || "",
         sku: product.sku || "",
         category: product.category || "",
         quantity: product.quantity || 0,
         price: product.price || 0,
+        location: product.location || "",
         imageUrl: product.imageUrl || "",
         lowStockThreshold: product.lowStockThreshold || 10
       })
@@ -48,6 +50,7 @@ const ProductModal = ({
         category: "",
         quantity: 0,
         price: 0,
+        location: "",
         imageUrl: "",
         lowStockThreshold: 10
       })
@@ -55,7 +58,19 @@ const ProductModal = ({
     setErrors({})
   }, [product, isOpen])
 
-  const handleChange = (e) => {
+  const generateSKU = () => {
+    const prefix = formData.name.substring(0, 3).toUpperCase() || "PRD"
+    const timestamp = Date.now().toString().slice(-6)
+    const randomNum = Math.floor(Math.random() * 100).toString().padStart(2, '0')
+    const generatedSKU = `${prefix}${timestamp}${randomNum}`
+    
+    setFormData(prev => ({
+      ...prev,
+      sku: generatedSKU
+    }))
+  }
+
+const handleChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
@@ -74,7 +89,7 @@ const ProductModal = ({
   }
 
   const validateForm = () => {
-    const newErrors = {}
+const newErrors = {}
 
     if (!formData.name.trim()) {
       newErrors.name = "Product name is required"
@@ -100,6 +115,10 @@ const ProductModal = ({
       newErrors.lowStockThreshold = "Low stock threshold must be 0 or greater"
     }
 
+    if (!formData.location.trim()) {
+      newErrors.location = "Location is required"
+    }
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -117,12 +136,13 @@ const ProductModal = ({
   }
 
   const handleClose = () => {
-    setFormData({
+setFormData({
       name: "",
       sku: "",
       category: "",
       quantity: 0,
       price: 0,
+      location: "",
       imageUrl: "",
       lowStockThreshold: 10
     })
@@ -131,69 +151,83 @@ const ProductModal = ({
       onClose()
     }
   }
-
-  return (
+return (
     <Modal
       isOpen={isOpen}
       onClose={handleClose}
       title={isEditing ? "Edit Product" : "Add New Product"}
       size="lg"
-      className={className}
+      className="fixed bottom-0 left-0 right-0 mx-auto max-w-4xl"
       {...props}
     >
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6 p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Product Name */}
+{/* Product Name */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-white">
-              Product Name *
-            </label>
             <Input
               name="name"
               value={formData.name}
               onChange={handleChange}
+              label="Product Name *"
               placeholder="Enter product name"
               error={errors.name}
               disabled={isLoading}
             />
             {errors.name && (
-              <p className="text-error text-sm flex items-center space-x-1">
+              <motion.p 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-error text-sm flex items-center space-x-1"
+              >
                 <ApperIcon name="AlertCircle" className="w-4 h-4" />
                 <span>{errors.name}</span>
-              </p>
+              </motion.p>
             )}
           </div>
 
           {/* SKU */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-white">
-              SKU *
-            </label>
-            <Input
-              name="sku"
-              value={formData.sku}
-              onChange={handleChange}
-              placeholder="Enter SKU"
-              error={errors.sku}
-              disabled={isLoading}
-            />
+            <div className="flex space-x-2">
+              <Input
+                name="sku"
+                value={formData.sku}
+                onChange={handleChange}
+                label="SKU *"
+                placeholder="Enter SKU"
+                error={errors.sku}
+                disabled={isLoading}
+                className="flex-1"
+              />
+              <Button
+                type="button"
+                variant="secondary"
+                size="md"
+                onClick={generateSKU}
+                disabled={isLoading || !formData.name}
+                className="h-12 px-3"
+              >
+                <ApperIcon name="RefreshCw" className="w-4 h-4" />
+              </Button>
+            </div>
             {errors.sku && (
-              <p className="text-error text-sm flex items-center space-x-1">
+              <motion.p 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-error text-sm flex items-center space-x-1"
+              >
                 <ApperIcon name="AlertCircle" className="w-4 h-4" />
                 <span>{errors.sku}</span>
-              </p>
+              </motion.p>
             )}
           </div>
 
           {/* Category */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-white">
-              Category *
-            </label>
             <Select
               name="category"
               value={formData.category}
               onChange={handleChange}
+              label="Category *"
               error={errors.category}
               disabled={isLoading}
             >
@@ -203,82 +237,119 @@ const ProductModal = ({
               ))}
             </Select>
             {errors.category && (
-              <p className="text-error text-sm flex items-center space-x-1">
+              <motion.p 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-error text-sm flex items-center space-x-1"
+              >
                 <ApperIcon name="AlertCircle" className="w-4 h-4" />
                 <span>{errors.category}</span>
-              </p>
+              </motion.p>
             )}
           </div>
 
           {/* Quantity */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-white">
-              Quantity *
-            </label>
             <Input
               name="quantity"
               type="number"
               value={formData.quantity}
               onChange={handleChange}
+              label="Quantity *"
               placeholder="Enter quantity"
               min="0"
               error={errors.quantity}
               disabled={isLoading}
             />
             {errors.quantity && (
-              <p className="text-error text-sm flex items-center space-x-1">
+              <motion.p 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-error text-sm flex items-center space-x-1"
+              >
                 <ApperIcon name="AlertCircle" className="w-4 h-4" />
                 <span>{errors.quantity}</span>
-              </p>
+              </motion.p>
             )}
           </div>
 
-          {/* Price */}
+          {/* Minimum Quantity */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-white">
-              Price *
-            </label>
-            <Input
-              name="price"
-              type="number"
-              step="0.01"
-              value={formData.price}
-              onChange={handleChange}
-              placeholder="Enter price"
-              min="0.01"
-              error={errors.price}
-              disabled={isLoading}
-            />
-            {errors.price && (
-              <p className="text-error text-sm flex items-center space-x-1">
-                <ApperIcon name="AlertCircle" className="w-4 h-4" />
-                <span>{errors.price}</span>
-              </p>
-            )}
-          </div>
-
-          {/* Low Stock Threshold */}
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-white">
-              Low Stock Threshold
-            </label>
             <Input
               name="lowStockThreshold"
               type="number"
               value={formData.lowStockThreshold}
               onChange={handleChange}
-              placeholder="Enter threshold"
+              label="Minimum Quantity"
+              placeholder="Enter minimum quantity"
               min="0"
               error={errors.lowStockThreshold}
               disabled={isLoading}
             />
             {errors.lowStockThreshold && (
-              <p className="text-error text-sm flex items-center space-x-1">
+              <motion.p 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-error text-sm flex items-center space-x-1"
+              >
                 <ApperIcon name="AlertCircle" className="w-4 h-4" />
                 <span>{errors.lowStockThreshold}</span>
-              </p>
+              </motion.p>
             )}
           </div>
+
+          {/* Price */}
+          <div className="space-y-2">
+            <div className="relative">
+              <Input
+                name="price"
+                type="number"
+                step="0.01"
+                value={formData.price}
+                onChange={handleChange}
+                label="Price *"
+                placeholder="0.00"
+                min="0.01"
+                error={errors.price}
+                disabled={isLoading}
+                className="pl-8"
+              />
+              <span className="absolute left-3 top-3 text-white/50 text-sm">$</span>
+            </div>
+            {errors.price && (
+              <motion.p 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-error text-sm flex items-center space-x-1"
+              >
+                <ApperIcon name="AlertCircle" className="w-4 h-4" />
+                <span>{errors.price}</span>
+              </motion.p>
+            )}
+          </div>
+        </div>
+
+        {/* Location - Full Width */}
+        <div className="space-y-2">
+          <Input
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            label="Location *"
+            placeholder="e.g., Warehouse A, Shelf B3"
+            error={errors.location}
+            disabled={isLoading}
+          />
+          {errors.location && (
+            <motion.p 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-error text-sm flex items-center space-x-1"
+            >
+              <ApperIcon name="AlertCircle" className="w-4 h-4" />
+              <span>{errors.location}</span>
+            </motion.p>
+          )}
         </div>
 
         {/* Image URL */}
@@ -317,34 +388,31 @@ const ProductModal = ({
           </div>
         )}
 
-        {/* Actions */}
-        <div className="flex justify-end space-x-4 pt-6">
+{/* Actions */}
+        <div className="flex justify-end space-x-4 pt-6 border-t border-white/10">
           <Button
             type="button"
-            variant="ghost"
+            variant="secondary"
             onClick={handleClose}
             disabled={isLoading}
+            className="min-w-[100px]"
           >
-            Cancel
+            <div className="flex items-center space-x-2">
+              <ApperIcon name="X" className="w-4 h-4" />
+              <span>Cancel</span>
+            </div>
           </Button>
           
           <Button
             type="submit"
             variant="primary"
-            disabled={isLoading}
-            className="min-w-[120px]"
+            loading={isLoading}
+            className="min-w-[140px]"
           >
-            {isLoading ? (
-              <div className="flex items-center space-x-2">
-                <ApperIcon name="Loader2" className="w-4 h-4 animate-spin" />
-                <span>{isEditing ? "Updating..." : "Creating..."}</span>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <ApperIcon name={isEditing ? "Save" : "Plus"} className="w-4 h-4" />
-                <span>{isEditing ? "Update" : "Create"}</span>
-              </div>
-            )}
+            <div className="flex items-center space-x-2">
+              <ApperIcon name={isEditing ? "Save" : "Plus"} className="w-4 h-4" />
+              <span>Save Product</span>
+            </div>
           </Button>
         </div>
       </form>
